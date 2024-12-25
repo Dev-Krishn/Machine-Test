@@ -14,7 +14,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const { theme, themeStyles, toggleTheme } = useContext(ThemeContext); // Access theme
+  const { theme, themeStyles, toggleTheme } = useContext(ThemeContext); 
 
   const handleLogin = async () => {
     try {
@@ -24,7 +24,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
         body: JSON.stringify({
           username: 'emilys',
           password: 'emilyspass',
-          expiresInMins: 30, // optional
+          expiresInMins: 30, 
         }),
         credentials: 'include',
       });
@@ -32,7 +32,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
   
       if (response.ok) {
         Alert.alert('Login Successful', `Welcome, ${data.username}!`);
-        navigation.navigate('MainTabs'); // Navigate to the Tab Navigator
+        navigation.navigate('MainTabs');
       } else {
         Alert.alert('Login Failed', data.message || 'Invalid credentials');
       }

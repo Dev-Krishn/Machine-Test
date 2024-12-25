@@ -27,7 +27,7 @@ const RecipesScreen: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const { theme, themeStyles, toggleTheme } = useContext(ThemeContext); 
+  const { theme, themeStyles } = useContext(ThemeContext); 
 
  
   const fetchRecipes = async () => {
