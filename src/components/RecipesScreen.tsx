@@ -1,6 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, FlatList, StyleSheet, ActivityIndicator, Image, TextInput } from 'react-native';
-import { ThemeContext } from '../themes/ThemeContext'; 
+import React, {useState, useEffect, useContext} from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  ActivityIndicator,
+  Image,
+  TextInput,
+} from 'react-native';
+import {ThemeContext} from '../themes/ThemeContext';
 
 interface Recipe {
   id: number;
@@ -27,9 +35,8 @@ const RecipesScreen: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const { theme, themeStyles } = useContext(ThemeContext); 
+  const {theme, themeStyles} = useContext(ThemeContext);
 
- 
   const fetchRecipes = async () => {
     setLoading(true);
     setError(null);
@@ -38,7 +45,7 @@ const RecipesScreen: React.FC = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setRecipes(data.recipes); 
+        setRecipes(data.recipes);
         setFilteredRecipes(data.recipes);
       } else {
         setError('Failed to load recipes');
@@ -59,56 +66,96 @@ const RecipesScreen: React.FC = () => {
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     if (query) {
-      const filteredData = recipes.filter((recipe) =>
-        recipe.name.toLowerCase().includes(query.toLowerCase())
+      const filteredData = recipes.filter(recipe =>
+        recipe.name.toLowerCase().includes(query.toLowerCase()),
       );
       setFilteredRecipes(filteredData);
     } else {
-      setFilteredRecipes(recipes); // Show all recipes if search query is empty
+      setFilteredRecipes(recipes);
     }
   };
 
-  // Render each recipe item
-  const renderItem = ({ item }: { item: Recipe }) => (
+  const renderItem = ({item}: {item: Recipe}) => (
     <View
       style={[
         styles.recipeCard,
-        { backgroundColor: themeStyles[theme].backgroundColor, borderColor: themeStyles[theme].borderColor }
-      ]}
-    >
-      <Image source={{ uri: item.image }} style={styles.recipeImage} />
-      <Text style={[styles.recipeTitle, { color: themeStyles[theme].textColor }]}>{item.name}</Text>
-      <Text style={[styles.recipeText, { color: themeStyles[theme].textColor }]}>Cuisine: {item.cuisine}</Text>
-      <Text style={[styles.recipeText, { color: themeStyles[theme].textColor }]}>Difficulty: {item.difficulty}</Text>
-      <Text style={[styles.recipeText, { color: themeStyles[theme].textColor }]}>Prep Time: {item.prepTimeMinutes} minutes</Text>
-      <Text style={[styles.recipeText, { color: themeStyles[theme].textColor }]}>Cook Time: {item.cookTimeMinutes} minutes</Text>
-      <Text style={[styles.recipeText, { color: themeStyles[theme].textColor }]}>Servings: {item.servings}</Text>
-      <Text style={[styles.recipeText, { color: themeStyles[theme].textColor }]}>Calories per Serving: {item.caloriesPerServing}</Text>
-      <Text style={[styles.recipeText, { color: themeStyles[theme].textColor }]}>Rating: {item.rating} ({item.reviewCount} reviews)</Text>
+        {
+          backgroundColor: themeStyles[theme].backgroundColor,
+          borderColor: themeStyles[theme].borderColor,
+        },
+      ]}>
+      <Image source={{uri: item.image}} style={styles.recipeImage} />
+      <Text style={[styles.recipeTitle, {color: themeStyles[theme].textColor}]}>
+        {item.name}
+      </Text>
+      <Text style={[styles.recipeText, {color: themeStyles[theme].textColor}]}>
+        Cuisine: {item.cuisine}
+      </Text>
+      <Text style={[styles.recipeText, {color: themeStyles[theme].textColor}]}>
+        Difficulty: {item.difficulty}
+      </Text>
+      <Text style={[styles.recipeText, {color: themeStyles[theme].textColor}]}>
+        Prep Time: {item.prepTimeMinutes} minutes
+      </Text>
+      <Text style={[styles.recipeText, {color: themeStyles[theme].textColor}]}>
+        Cook Time: {item.cookTimeMinutes} minutes
+      </Text>
+      <Text style={[styles.recipeText, {color: themeStyles[theme].textColor}]}>
+        Servings: {item.servings}
+      </Text>
+      <Text style={[styles.recipeText, {color: themeStyles[theme].textColor}]}>
+        Calories per Serving: {item.caloriesPerServing}
+      </Text>
+      <Text style={[styles.recipeText, {color: themeStyles[theme].textColor}]}>
+        Rating: {item.rating} ({item.reviewCount} reviews)
+      </Text>
 
-      <Text style={[styles.sectionTitle, { color: themeStyles[theme].textColor }]}>Ingredients:</Text>
+      <Text
+        style={[styles.sectionTitle, {color: themeStyles[theme].textColor}]}>
+        Ingredients:
+      </Text>
       <FlatList
         data={item.ingredients}
-        renderItem={({ item }) => <Text style={[styles.listItem, { color: themeStyles[theme].textColor }]}>- {item}</Text>}
+        renderItem={({item}) => (
+          <Text
+            style={[styles.listItem, {color: themeStyles[theme].textColor}]}>
+            - {item}
+          </Text>
+        )}
         keyExtractor={(ingredient, index) => `${index}`}
       />
 
-      <Text style={[styles.sectionTitle, { color: themeStyles[theme].textColor }]}>Instructions:</Text>
+      <Text
+        style={[styles.sectionTitle, {color: themeStyles[theme].textColor}]}>
+        Instructions:
+      </Text>
       <FlatList
         data={item.instructions}
-        renderItem={({ item }) => <Text style={[styles.listItem, { color: themeStyles[theme].textColor }]}>- {item}</Text>}
+        renderItem={({item}) => (
+          <Text
+            style={[styles.listItem, {color: themeStyles[theme].textColor}]}>
+            - {item}
+          </Text>
+        )}
         keyExtractor={(instruction, index) => `${index}`}
       />
     </View>
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: themeStyles[theme].backgroundColor }]}>
+    <View
+      style={[
+        styles.container,
+        {backgroundColor: themeStyles[theme].backgroundColor},
+      ]}>
       {/* Search Bar */}
       <TextInput
         style={[
           styles.searchBar,
-          { backgroundColor: themeStyles[theme].backgroundColor, color: themeStyles[theme].textColor }
+          {
+            backgroundColor: themeStyles[theme].backgroundColor,
+            color: themeStyles[theme].textColor,
+          },
         ]}
         placeholder="Search Recipes..."
         placeholderTextColor={theme === 'dark' ? '#aaa' : '#555'}
@@ -117,15 +164,21 @@ const RecipesScreen: React.FC = () => {
       />
 
       {loading ? (
-        <ActivityIndicator size="large" color={themeStyles[theme].primaryColor} />
+        <ActivityIndicator
+          size="large"
+          color={themeStyles[theme].primaryColor}
+        />
       ) : error ? (
         <View style={styles.errorContainer}>
-          <Text style={[styles.errorText, { color: themeStyles[theme].textColor }]}>{error}</Text>
+          <Text
+            style={[styles.errorText, {color: themeStyles[theme].textColor}]}>
+            {error}
+          </Text>
         </View>
       ) : (
         <FlatList
           data={filteredRecipes}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={item => item.id.toString()}
           renderItem={renderItem}
           contentContainerStyle={styles.listContainer}
         />

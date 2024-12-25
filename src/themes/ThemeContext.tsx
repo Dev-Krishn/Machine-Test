@@ -1,4 +1,4 @@
-import React, { createContext, useState, ReactNode } from 'react';
+import React, {createContext, useState, ReactNode} from 'react';
 
 interface ThemeContextType {
   theme: 'light' | 'dark';
@@ -15,7 +15,9 @@ interface ThemeStyles {
 }
 
 // Create the context
-export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+export const ThemeContext = createContext<ThemeContextType | undefined>(
+  undefined,
+);
 
 // Define props for the provider
 interface ThemeProviderProps {
@@ -23,11 +25,11 @@ interface ThemeProviderProps {
 }
 
 // Create a provider component
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({children}) => {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
   const themeStyles = {
@@ -42,7 +44,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, themeStyles }}>
+    <ThemeContext.Provider value={{theme, toggleTheme, themeStyles}}>
       {children}
     </ThemeContext.Provider>
   );
